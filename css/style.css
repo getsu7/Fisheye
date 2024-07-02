@@ -18,6 +18,10 @@ h1 {
   margin-right: 100px;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 .logo {
   height: 50px;
   margin-left: 100px;

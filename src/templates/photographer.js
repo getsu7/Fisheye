@@ -1,7 +1,7 @@
 export const usePhotographerTemplate = () => {
   const getUserCardDOM = (data) => {
     const { name, id, city, country, tagline, price, portrait } = data;
-    const picture = `assets/photographers/${portrait}`;
+    const picture = `../assets/photographers/${portrait}`;
 
     const article = document.createElement('article');
 
@@ -17,7 +17,7 @@ export const usePhotographerTemplate = () => {
     h2.textContent = name;
 
     const a = document.createElement('a');
-    a.setAttribute('href', `/FishEye/photographer.html?id=${id}`);
+    a.setAttribute('href', `/FishEye/static/photographer.html?id=${id}`);
     a.setAttribute('aria-label', `Lien vers la page de ${name}`);
     a.appendChild(imgContainer);
     a.appendChild(h2);
@@ -39,9 +39,20 @@ export const usePhotographerTemplate = () => {
   };
 
   const getHeaderPhotographerDOM = (data) => {
-    const { media } = data;
-    console.log(data);
-    console.log(media);
+    const { media, name, tagline, city, country, portrait } = data;
+    const picture = `../assets/photographers/${portrait}`;
+
+    const headerName = document.querySelector('.photograph-header__name');
+    headerName.textContent = name;
+    const headerLocation = document.querySelector('.photograph-header__location');
+    headerLocation.textContent = city + ', ' + country;
+    const headerTagline = document.querySelector('.photograph-header__tagline');
+    headerTagline.textContent = tagline;
+    const headerPicture = document.querySelector('.photograph-header__picture');
+    headerPicture.setAttribute('src', picture);
+    headerPicture.setAttribute('alt', name);
+
+    console.log('log', media);
   };
 
   return { getUserCardDOM, getHeaderPhotographerDOM };
