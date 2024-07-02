@@ -27,6 +27,7 @@ export const usePhotographerService = () => {
   };
 
   const getPhotographerById = (idPhotographer, photographers) => {
+    //return exception si pas de phtotographer.id
     return photographers.find((photographer) => photographer.id === idPhotographer);
   };
 
