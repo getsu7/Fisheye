@@ -17,7 +17,7 @@ export const usePhotographerTemplate = () => {
     h2.textContent = name;
 
     const a = document.createElement('a');
-    a.setAttribute('href', `/FishEye/static/photographer.html?id=${id}`);
+    a.setAttribute('href', `/FishEye/photographer.html?id=${id}`);
     a.setAttribute('aria-label', `Lien vers la page de ${name}`);
     a.appendChild(imgContainer);
     a.appendChild(h2);
@@ -40,7 +40,7 @@ export const usePhotographerTemplate = () => {
 
   const getHeaderPhotographerDOM = (data) => {
     const { media, name, tagline, city, country, portrait } = data;
-    const picture = `../assets/photographers/${portrait}`;
+    const picture = `assets/photographers/${portrait}`;
 
     const headerName = document.querySelector('.photograph-header__name');
     headerName.textContent = name;
