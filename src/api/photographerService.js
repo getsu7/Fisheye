@@ -27,9 +27,20 @@ export const usePhotographerService = () => {
   };
 
   const getPhotographerById = (idPhotographer, photographers) => {
-    //return exception si pas de phtotographer.id
+    if (!photographers.find((photographer) => photographer.id === idPhotographer)) {
+      window.location.href = '../../404.html';
+    }
     return photographers.find((photographer) => photographer.id === idPhotographer);
   };
 
-  return { getPhotographers, getPhotographerById };
+  const getPhotographerLikes = (photographer) => {
+    let likes = 0;
+
+    photographer.media.forEach((media) => {
+      likes += media.likes;
+    });
+
+    return likes;
+  };
+  return { getPhotographers, getPhotographerById, getPhotographerLikes };
 };

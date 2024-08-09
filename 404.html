@@ -3,20 +3,10 @@
   <head>
     <title>Page non trouvée</title>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="5;url=index.html" />
+    <meta http-equiv="refresh" content="5;url=FishEye/index.html" />
   </head>
   <body>
-    <script type="text/javascript">
-      (function () {
-        const path = window.location.pathname;
-        const query = window.location.search;
-        if (query.includes('id=')) {
-          window.location.href = './photographer.html' + query;
-        } else {
-          document.write('<h1>Page non trouvée</h1>');
-          document.write("<p>Vous serez redirigé vers la page d'accueil dans 5 secondes...</p>");
-        }
-      })();
-    </script>
+    <h1>Page non trouvée</h1>
+    <p>Vous serez redirigé vers la page d'accueil dans 5 secondes...</p>
   </body>
 </html>

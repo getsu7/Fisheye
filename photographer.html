@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="fr">
   <head>
     <link href="./css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -15,16 +15,19 @@
     </header>
     <main id="main">
       <div class="photograph-header">
-        <div class="photograph-header__info">
-          <h1 class="photograph-header__name"></h1>
-          <p class="photograph-header__location"></p>
-          <p class="photograph-header__tagline"></p>
-        </div>
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-        <div class="photograph-header__picture-wrapper">
-          <img class="photograph-header__picture" src="#" alt="#" />
+      </div>
+      <div class="media-filter">
+        <span>Trier par</span>
+        <div class="media-filter__container">
+          <select class="media-filter__dropdown">
+            <option value="popularity">Popularité</option>
+            <option value="date">Date</option>
+            <option value="title">Titre</option>
+          </select>
         </div>
       </div>
+      <div class="media-card__list"></div>
     </main>
     <div id="contact_modal">
       <div class="modal">

@@ -39,21 +39,77 @@ export const usePhotographerTemplate = () => {
   };
 
   const getHeaderPhotographerDOM = (data) => {
-    const { media, name, tagline, city, country, portrait } = data;
-    const picture = `assets/photographers/${portrait}`;
+    const { name, tagline, city, country, portrait } = data;
+    const picturePath = `assets/photographers/${portrait}`;
 
-    const headerName = document.querySelector('.photograph-header__name');
-    headerName.textContent = name;
-    const headerLocation = document.querySelector('.photograph-header__location');
-    headerLocation.textContent = city + ', ' + country;
-    const headerTagline = document.querySelector('.photograph-header__tagline');
-    headerTagline.textContent = tagline;
-    const headerPicture = document.querySelector('.photograph-header__picture');
-    headerPicture.setAttribute('src', picture);
-    headerPicture.setAttribute('alt', name);
+    const infos = document.createElement('div');
+    infos.setAttribute('class', 'photograph-header__info');
 
-    console.log('log', media);
+    infos.innerHTML = `
+          <h1 class="photograph-header__name">${name}</h1>
+          <p class="photograph-header__location">${city}, ${country}</p>
+          <p class="photograph-header__tagline">${tagline}</p>`;
+
+    const photographerPortrait = document.createElement('div');
+    photographerPortrait.setAttribute('class', 'photograph-header__picture-wrapper');
+
+    photographerPortrait.innerHTML = `<img class="photograph-header__picture" src="${picturePath}" alt="${name}" />`;
+    return { infos, photographerPortrait };
   };
 
-  return { getUserCardDOM, getHeaderPhotographerDOM };
+  const getPictureCardDOM = (media) => {
+    const picturePath = `assets/medias/${media.image}`;
+    const card = document.createElement('div');
+    card.setAttribute('class', 'media-card');
+
+    card.innerHTML = `
+      <img class="media-card__thumbnail-image" src="${picturePath}" alt="${media.title}"/>
+      <div class="media-card__desc">
+        <p class="media-card__title">${media.title}</p>
+        <span class="media-card__like">
+          <i>${media.likes}</i>
+          <img src="assets/icons/like.png" alt="likes">
+        </span>
+      </div>
+    `;
+
+    return card;
+  };
+
+  const getVideoCardDOM = (media) => {
+    const videoPath = `assets/medias/${media.video}`;
+    const card = document.createElement('div');
+    card.setAttribute('class', 'media-card');
+
+    card.innerHTML = `
+      <video class="media-card__thumbnail-video" aria-label="${media.title}" controls><source src="${videoPath}" type="video/mp4"/></video>
+      <div class="media-card__desc">
+        <p class="media-card__title">${media.title}</p>
+        <span class="media-card__like">
+          <i>${media.likes}</i>
+          <img src="assets/icons/like.png" alt="likes">
+        </span>
+      </div>
+    `;
+
+    return card;
+  };
+
+  const getFooterPhotographerDOM = (photographer, likes) => {
+    const { price } = photographer;
+
+    const footer = document.createElement('footer');
+    footer.innerHTML = `
+     <span>
+        <i>${likes}</i>
+        <img src="assets/icons/like-dark.png" alt="likes" />
+      </span>
+      <span>
+        <i>${price}€ / jour </i>
+      </span>
+    `;
+    return footer;
+  };
+
+  return { getUserCardDOM, getHeaderPhotographerDOM, getPictureCardDOM, getVideoCardDOM, getFooterPhotographerDOM };
 };
