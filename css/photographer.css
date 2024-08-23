@@ -142,7 +142,7 @@ form input {
 .media-card__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   gap: 3em;
   margin: 50px 100px;

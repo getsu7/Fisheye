@@ -18,7 +18,7 @@
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
       <div class="media-filter">
-        <span>Trier par</span>
+        <label>Trier par</label>
         <div class="media-filter__container">
           <select class="media-filter__dropdown">
             <option value="popularity">Popularité</option>
@@ -27,7 +27,6 @@
           </select>
         </div>
       </div>
-      <div class="media-card__list"></div>
     </main>
     <div id="contact_modal">
       <div class="modal">
@@ -37,8 +36,10 @@
         </header>
         <form>
           <div>
-            <label>Prénom</label>
-            <input />
+            <label>
+              Prénom
+              <input />
+            </label>
           </div>
           <button class="contact_button">Envoyer</button>
         </form>

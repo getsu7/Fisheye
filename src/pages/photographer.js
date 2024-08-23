@@ -3,9 +3,34 @@ const { getPhotographerById, getPhotographers, getPhotographerLikes } = usePhoto
 import { usePhotographerTemplate } from '../templates/photographer.js';
 const { getHeaderPhotographerDOM, getFooterPhotographerDOM } = usePhotographerTemplate();
 import { useMediaFactorie } from '../factories/mediaFactorie.js';
+import { orderBy } from '../utils/mediaFilter.js';
 const { createMediaCard } = useMediaFactorie();
 
+let photographers;
+let photographer;
+let likes;
+
 const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'));
+const mediaFilter = document.querySelector('.media-filter');
+
+mediaFilter.addEventListener('change', (e) => {
+  photographer.media = orderBy(e.target.value, photographer.media);
+  const oldMediaCardList = document.querySelector('.media-card__list');
+  oldMediaCardList.remove();
+  createMediaCardList(photographer);
+});
+
+const createMediaCardList = (data) => {
+  const mediaCardList = document.createElement('div');
+  mediaCardList.setAttribute('class', 'media-card__list');
+  data.media.forEach((media) => {
+    const mediaCard = createMediaCard(media);
+    mediaCardList.appendChild(mediaCard);
+  });
+  mediaFilter.after(mediaCardList);
+
+  return mediaCardList;
+};
 
 const displayData = async (data, likes) => {
   const { infos, photographerPortrait } = getHeaderPhotographerDOM(data);
@@ -15,20 +40,14 @@ const displayData = async (data, likes) => {
   contactButton.before(infos);
   contactButton.after(photographerPortrait);
 
-  if (document.querySelector('.media-card__list')) {
-    const mediaCardList = document.querySelector('.media-card__list');
-    data.media.forEach((media) => {
-      const mediaCard = createMediaCard(media);
-      mediaCardList.appendChild(mediaCard);
-    });
-    mediaCardList.after(footer);
-  }
+  const mediaCardList = createMediaCardList(data);
+  mediaCardList.after(footer);
 };
 
 const init = async () => {
-  const photographers = await getPhotographers();
-  const photographer = await getPhotographerById(idPhotographer, photographers);
-  const likes = getPhotographerLikes(photographer);
+  photographers = await getPhotographers();
+  photographer = await getPhotographerById(idPhotographer, photographers);
+  likes = getPhotographerLikes(photographer);
 
   await displayData(photographer, likes);
 };
