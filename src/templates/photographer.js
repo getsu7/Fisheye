@@ -63,7 +63,7 @@ export const usePhotographerTemplate = () => {
     card.setAttribute('class', 'media-card');
 
     card.innerHTML = `
-      <img class="media-card__thumbnail-image" src="${picturePath}" alt="${media.title}"/>
+        <img class="media-card__thumbnail-image" id="${media.id}" src="${picturePath}" alt="${media.title}"/>
       <div class="media-card__desc">
         <p class="media-card__title">${media.title}</p>
         <span class="media-card__like">

@@ -5,19 +5,20 @@ const { getHeaderPhotographerDOM, getFooterPhotographerDOM } = usePhotographerTe
 import { useMediaFactorie } from '../factories/mediaFactorie.js';
 import { orderBy } from '../utils/mediaFilter.js';
 const { createMediaCard } = useMediaFactorie();
+import * as lightBox from './lightbox.js';
 
-let photographers;
+const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'));
 let photographer;
 let likes;
 
-const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'));
+//add default value on select
 const mediaFilter = document.querySelector('.media-filter');
-
 mediaFilter.addEventListener('change', (e) => {
   photographer.media = orderBy(e.target.value, photographer.media);
   const oldMediaCardList = document.querySelector('.media-card__list');
   oldMediaCardList.remove();
   createMediaCardList(photographer);
+  dispatchEvent(new CustomEvent('mediaListUpdated'));
 });
 
 const createMediaCardList = (data) => {
@@ -28,8 +29,16 @@ const createMediaCardList = (data) => {
     mediaCardList.appendChild(mediaCard);
   });
   mediaFilter.after(mediaCardList);
-
   return mediaCardList;
+};
+
+const openLightbox = () => {
+  const medias = document.querySelectorAll('.media-card__thumbnail-image');
+  medias.forEach((media) =>
+    media.addEventListener('click', (e) => {
+      lightBox.init(e, photographer);
+    })
+  );
 };
 
 const displayData = async (data, likes) => {
@@ -45,10 +54,20 @@ const displayData = async (data, likes) => {
 };
 
 const init = async () => {
-  photographers = await getPhotographers();
+  const photographers = await getPhotographers();
   photographer = await getPhotographerById(idPhotographer, photographers);
   likes = getPhotographerLikes(photographer);
 
   await displayData(photographer, likes);
 };
-init();
+
+init().then(() => {
+  const likesButtons = document.querySelectorAll('.media-card__like');
+  likesButtons.forEach((likeButton) =>
+    likeButton.addEventListener('click', (e) => {
+      // console.log(e.target.value);
+    })
+  );
+  openLightbox();
+  addEventListener('mediaListUpdated', openLightbox);
+});
