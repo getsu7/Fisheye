@@ -27,9 +27,6 @@ export const usePhotographerService = () => {
   };
 
   const getPhotographerById = (idPhotographer, photographers) => {
-    if (!photographers.find((photographer) => photographer.id === idPhotographer)) {
-      window.location.href = '../../404.html';
-    }
     return photographers.find((photographer) => photographer.id === idPhotographer);
   };
 

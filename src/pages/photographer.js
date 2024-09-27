@@ -4,6 +4,7 @@ import { usePhotographerTemplate } from '../templates/photographer.js';
 const { getHeaderPhotographerDOM, getFooterPhotographerDOM } = usePhotographerTemplate();
 import { useMediaFactorie } from '../factories/mediaFactorie.js';
 import { orderBy } from '../utils/mediaFilter.js';
+import * as contactForm from '../utils/contactForm.js';
 const { createMediaCard } = useMediaFactorie();
 import * as lightBox from './lightbox.js';
 
@@ -11,7 +12,9 @@ const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'
 let photographer;
 let likes;
 
-//add default value on select
+const contactButton = document.querySelector('.contact_button');
+contactButton.addEventListener('click', contactForm.useContactModal().displayModal);
+
 const mediaFilter = document.querySelector('.media-filter');
 mediaFilter.addEventListener('change', (e) => {
   photographer.media = orderBy(e.target.value, photographer.media);
@@ -62,12 +65,19 @@ const init = async () => {
 };
 
 init().then(() => {
+  photographer.media.forEach((obj) => {
+    Object.defineProperty(obj, 'liked', {
+      value: false,
+      writable: true
+    });
+  });
   const likesButtons = document.querySelectorAll('.media-card__like');
   likesButtons.forEach((likeButton) =>
     likeButton.addEventListener('click', (e) => {
-      // console.log(e.target.value);
+      console.log(e.target);
     })
   );
+
   openLightbox();
   addEventListener('mediaListUpdated', openLightbox);
 });

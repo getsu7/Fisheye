@@ -64,11 +64,11 @@ export const init = (e, data) => {
       backArrowButton.style.display = 'none';
       nextArrowButton.style.display = 'block';
     } else if (lightBoxMediaCounter === data.media.length - 1) {
+      backArrowButton.style.display = 'block';
       nextArrowButton.style.display = 'none';
-      backArrowButton.style.display = 'block';
     } else {
-      nextArrowButton.style.display = 'block';
       backArrowButton.style.display = 'block';
+      nextArrowButton.style.display = 'block';
     }
   };
 
