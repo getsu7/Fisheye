@@ -22,7 +22,7 @@ export const usePhotographerTemplate = () => {
     a.appendChild(imgContainer);
     a.appendChild(h2);
 
-    const h3 = document.createElement('h3');
+    const h3 = document.createElement('p');
     h3.textContent = city + ', ' + country;
 
     const p = document.createElement('p');
@@ -47,7 +47,7 @@ export const usePhotographerTemplate = () => {
 
     infos.innerHTML = `
           <h1 class="photograph-header__name">${name}</h1>
-          <p class="photograph-header__location">${city}, ${country}</p>
+          <h2 class="photograph-header__location">${city}, ${country}</h2>
           <p class="photograph-header__tagline">${tagline}</p>`;
 
     const photographerPortrait = document.createElement('div');
@@ -63,12 +63,12 @@ export const usePhotographerTemplate = () => {
     card.setAttribute('class', 'media-card');
 
     card.innerHTML = `
-        <img class="media-card__thumbnail-image" id="${media.id}" src="${picturePath}" alt="${media.title}"/>
+        <img class="media-card__thumbnail-image thumbnail" id="${media.id}" src="${picturePath}" alt="${media.title}"/>
       <div class="media-card__desc">
-        <p class="media-card__title">${media.title}</p>
+        <h3 class="media-card__title">${media.title}</h3> 
         <span class="media-card__like">
           <i>${media.likes}</i>
-          <img src="assets/icons/like.png" alt="likes">
+          <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
       </div>
     `;
@@ -82,12 +82,12 @@ export const usePhotographerTemplate = () => {
     card.setAttribute('class', 'media-card');
 
     card.innerHTML = `
-      <video class="media-card__thumbnail-video" aria-label="${media.title}" controls><source src="${videoPath}" type="video/mp4"/></video>
+      <video class="media-card__thumbnail-video thumbnail" aria-label="${media.title}" id="${media.id}"><source src="${videoPath}" type="video/mp4"/></video>
       <div class="media-card__desc">
-        <p class="media-card__title">${media.title}</p>
+        <h3 class="media-card__title">${media.title}</h3>
         <span class="media-card__like">
           <i>${media.likes}</i>
-          <img src="assets/icons/like.png" alt="likes">
+          <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
       </div>
     `;
@@ -97,12 +97,11 @@ export const usePhotographerTemplate = () => {
 
   const getFooterPhotographerDOM = (photographer, likes) => {
     const { price } = photographer;
-
     const footer = document.createElement('footer');
     footer.innerHTML = `
      <span>
         <i>${likes}</i>
-        <img src="assets/icons/like-dark.png" alt="likes" />
+        <img src="assets/icons/like-dark.png" alt="like icon" />
       </span>
       <span>
         <i>${price}€ / jour </i>

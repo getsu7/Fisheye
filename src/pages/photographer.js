@@ -36,7 +36,7 @@ const createMediaCardList = (data) => {
 };
 
 const openLightbox = () => {
-  const medias = document.querySelectorAll('.media-card__thumbnail-image');
+  const medias = document.querySelectorAll('.thumbnail');
   medias.forEach((media) =>
     media.addEventListener('click', (e) => {
       lightBox.init(e, photographer);
@@ -59,6 +59,7 @@ const displayData = async (data, likes) => {
 const init = async () => {
   const photographers = await getPhotographers();
   photographer = await getPhotographerById(idPhotographer, photographers);
+  photographer.media = orderBy('popularity', photographer.media);
   likes = getPhotographerLikes(photographer);
 
   await displayData(photographer, likes);

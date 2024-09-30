@@ -15,6 +15,7 @@ export const useLightboxTemplate = () => {
   const getLightBoxVideoDOM = (media) => {
     const lightBox = document.createElement('div');
     lightBox.setAttribute('class', 'light-box__modal');
+    const videoPath = `assets/medias/${media.video}`;
 
     lightBox.innerHTML = `
     <div class="light-box__left-side"><img class="light-box__back-arrow" src="../../assets/icons/back-arrow.png" alt="back-arrow"/></div>

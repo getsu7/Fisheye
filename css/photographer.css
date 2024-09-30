@@ -120,7 +120,7 @@ form input {
   gap: 1em;
   margin: 1em 100px 0 100px;
 
-  .media-filter span {
+  label {
     font-size: 18px;
     font-weight: 700;
   }
@@ -158,10 +158,11 @@ form input {
   justify-content: space-between;
   margin-top: 1em;
 
-  p {
+  h3 {
     font-size: 24px;
     font-weight: 400;
     color: rgba(144, 28, 28, 1);
+    margin: 0;
   }
 }
 
