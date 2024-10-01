@@ -6,7 +6,7 @@ export const useLightboxTemplate = () => {
 
     lightBox.innerHTML = `
     <div class="light-box__left-side"><img class="light-box__back-arrow" src="../../assets/icons/back-arrow.png" alt="back-arrow"/></div>
-    <div class="light-box__content"><img src="${picturePath}" alt="${media.title}"/><p>${media.title}</p></div>
+    <div class="light-box__content"><img src="${picturePath}" alt="${media.title} picture"/><h3>${media.title}</h3></div>
     <div class="light-box__right-side"><img class="light-box__close-button" src="../../assets/icons/close.svg" alt="close modal button"><img class="light-box__next-arrow" src="../../assets/icons/next-arrow.png" alt="next-arrow"/></div>
     `;
     return lightBox;
@@ -19,7 +19,7 @@ export const useLightboxTemplate = () => {
 
     lightBox.innerHTML = `
     <div class="light-box__left-side"><img class="light-box__back-arrow" src="../../assets/icons/back-arrow.png" alt="back-arrow"/></div>
-    <div class="light-box__content"><video aria-label="${media.title}" controls><source src="${videoPath}" type="video/mp4"/></video><p>${media.title}</p></div> 
+    <div class="light-box__content"><video aria-label="${media.title} video" controls><source src="${videoPath}" type="video/mp4"/></video><h3>${media.title}</h3></div> 
     <div class="light-box__right-side"><img class="light-box__close-button" src="../../assets/icons/close.svg" alt="close modal button"><img class="light-box__next-arrow" src="../../assets/icons/next-arrow.png" alt="next-arrow"/></div>
     `;
     return lightBox;
@@ -31,7 +31,7 @@ export const useLightboxTemplate = () => {
     content.setAttribute('class', 'light-box__content');
 
     content.innerHTML = `
-      <video aria-label="${media.title}" controls><source src="${videoPath}" type="video/mp4"/></video><p>${media.title}</p>
+      <video aria-label="${media.title} video" controls><source src="${videoPath}" type="video/mp4"/></video><h3>${media.title}</h3>
     `;
     return content;
   };
@@ -42,7 +42,7 @@ export const useLightboxTemplate = () => {
     content.setAttribute('class', 'light-box__content');
 
     content.innerHTML = `
-      <img src="${picturePath}" alt="${media.title}"/><p>${media.title}</p>
+      <img src="${picturePath}" alt="${media.title} picture"/><h3>${media.title}</h3>
     `;
     return content;
   };

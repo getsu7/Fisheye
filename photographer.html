@@ -31,17 +31,29 @@
     <div id="contact_modal">
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="./assets/icons/close.svg" onclick="closeModal()" alt="contact button" />
+          <h2 class="contact_modal__header-name">Contactez-moi</h2>
+          <img class="contact_modal__close-button" src="./assets/icons/close.svg" alt="contact button" />
         </header>
-        <form>
+        <form id="contact_form">
           <div>
             <label>
               Prénom
-              <input />
+              <input name="firstname" />
+            </label>
+            <label>
+              Nom
+              <input name="lastname" />
+            </label>
+            <label>
+              Email
+              <input name="email" />
+            </label>
+            <label>
+              Votre message
+              <textarea name="message"></textarea>
             </label>
           </div>
-          <button class="contact_button">Envoyer</button>
+          <button type="submit" class="contact_button">Envoyer</button>
         </form>
       </div>
     </div>

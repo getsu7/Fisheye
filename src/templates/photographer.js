@@ -66,7 +66,7 @@ export const usePhotographerTemplate = () => {
         <img class="media-card__thumbnail-image thumbnail" id="${media.id}" src="${picturePath}" alt="${media.title}"/>
       <div class="media-card__desc">
         <h3 class="media-card__title">${media.title}</h3> 
-        <span class="media-card__like">
+        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like">
           <i>${media.likes}</i>
           <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
@@ -85,7 +85,7 @@ export const usePhotographerTemplate = () => {
       <video class="media-card__thumbnail-video thumbnail" aria-label="${media.title}" id="${media.id}"><source src="${videoPath}" type="video/mp4"/></video>
       <div class="media-card__desc">
         <h3 class="media-card__title">${media.title}</h3>
-        <span class="media-card__like">
+        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like">
           <i>${media.likes}</i>
           <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
@@ -100,7 +100,7 @@ export const usePhotographerTemplate = () => {
     const footer = document.createElement('footer');
     footer.innerHTML = `
      <span>
-        <i>${likes}</i>
+        <i id="like-counter">${likes}</i>
         <img src="assets/icons/like-dark.png" alt="like icon" />
       </span>
       <span>

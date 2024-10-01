@@ -50,9 +50,10 @@ img.light-box__back-arrow {
   max-height: 80vh;
   -webkit-box-shadow: 5px 0 3px 0 rgba(0, 0, 0, 0.61);
   box-shadow: 5px 0 3px 0 rgba(0, 0, 0, 0.61);
+  border-radius: 5px;
 }
 
-.light-box__content p {
+.light-box__content h3 {
   font-size: 24px;
   font-weight: 400;
   text-align: left;
