@@ -39,6 +39,40 @@ const onBackArrow = (photographer) => {
   left.after(newLightBoxContent);
 };
 
+export const redirectFocusOnLightBox = (data) => {
+  const focusableElements = '.light-box__back-arrow, .light-box__close-button, .light-box__next-arrow';
+  let focusableContent = document.querySelectorAll(focusableElements);
+  focusableContent = Array.prototype.slice.call(focusableContent);
+
+  const firstFocusableElement = focusableContent[0]; // Premier élément focusable
+  const lastFocusableElement = focusableContent[focusableContent.length - 1];
+
+  if (lightBoxMediaCounter === 0) {
+    lastFocusableElement.focus();
+  } else {
+    firstFocusableElement.focus();
+  }
+
+  focusableContent.forEach((content) => {
+    content.addEventListener('keydown', (ev) => {
+      if (ev.code === 'Space' || ev.code === 'Enter') {
+        switch (ev.target.className) {
+          case 'light-box__close-button':
+            onClose(lightBoxContainer);
+            break;
+          case 'light-box__next-arrow':
+            onNextArrow(data);
+            break;
+          case 'light-box__back-arrow':
+            onBackArrow(data);
+            break;
+          default:
+        }
+      }
+    });
+  });
+};
+
 export const init = (e, data) => {
   lightBox = displayLightBox(e, data);
 

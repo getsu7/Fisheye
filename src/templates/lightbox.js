@@ -5,9 +5,9 @@ export const useLightboxTemplate = () => {
     lightBox.setAttribute('class', 'light-box__modal');
 
     lightBox.innerHTML = `
-    <div class="light-box__left-side"><img class="light-box__back-arrow" src="../../assets/icons/back-arrow.png" alt="back-arrow"/></div>
+    <div class="light-box__left-side"><img class="light-box__back-arrow" src="../../assets/icons/back-arrow.png" alt="back-arrow" tabindex="0"/></div>
     <div class="light-box__content"><img src="${picturePath}" alt="${media.title} picture"/><h3>${media.title}</h3></div>
-    <div class="light-box__right-side"><img class="light-box__close-button" src="../../assets/icons/close.svg" alt="close modal button"><img class="light-box__next-arrow" src="../../assets/icons/next-arrow.png" alt="next-arrow"/></div>
+    <div class="light-box__right-side"><img class="light-box__close-button" src="../../assets/icons/close.svg" alt="close modal button" tabindex="0"><img class="light-box__next-arrow" src="../../assets/icons/next-arrow.png" alt="next-arrow" tabindex="0"/></div>
     `;
     return lightBox;
   };

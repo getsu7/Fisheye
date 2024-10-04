@@ -7,6 +7,7 @@ import { orderBy } from '../utils/mediaFilter.js';
 import * as contactForm from '../utils/contactForm.js';
 const { createMediaCard } = useMediaFactorie();
 import * as lightBox from './lightbox.js';
+import { redirectFocusOnLightBox } from './lightbox.js';
 
 const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'));
 let photographer;
@@ -16,6 +17,7 @@ const mediaFilter = document.querySelector('.media-filter');
 
 const contactButton = document.querySelector('.contact_button');
 const closeContactButton = document.querySelector('.contact_modal__close-button');
+
 const form = document.querySelector('#contact_form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -72,16 +74,30 @@ const addListenerOnMediaFilter = () => {
 
 const addListenerOnThumbnails = () => {
   const medias = document.querySelectorAll('.thumbnail');
-  medias.forEach((media) =>
+  medias.forEach((media) => {
     media.addEventListener('click', (e) => {
       lightBox.init(e, photographer);
-    })
-  );
+      dispatchEvent(new CustomEvent('lightBoxOpen'));
+    });
+    media.addEventListener('keydown', (ev) => {
+      if (ev.code === 'Space' || ev.code === 'Enter') {
+        lightBox.init(ev, photographer);
+        dispatchEvent(new CustomEvent('lightBoxOpen'));
+      }
+    });
+  });
 };
 
 const addListenerOnLikes = () => {
   const likesButtons = document.querySelectorAll('.media-card__like');
-  likesButtons.forEach((likeButton) => likeButton.addEventListener('click', (e) => likeMedia(e)));
+  likesButtons.forEach((likeButton) => {
+    likeButton.addEventListener('click', (e) => likeMedia(e));
+    likeButton.addEventListener('keydown', (ev) => {
+      if (ev.code === 'Space' || ev.code === 'Enter') {
+        likeMedia(ev);
+      }
+    });
+  });
 };
 
 const initListeners = () => {
@@ -121,4 +137,5 @@ init().then(() => {
     });
   });
   addEventListener('mediaListUpdated', initListeners);
+  addEventListener('lightBoxOpen', () => redirectFocusOnLightBox(photographer));
 });

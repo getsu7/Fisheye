@@ -53,7 +53,7 @@ export const usePhotographerTemplate = () => {
     const photographerPortrait = document.createElement('div');
     photographerPortrait.setAttribute('class', 'photograph-header__picture-wrapper');
 
-    photographerPortrait.innerHTML = `<img class="photograph-header__picture" src="${picturePath}" alt="${name}" />`;
+    photographerPortrait.innerHTML = `<img class="photograph-header__picture" src="${picturePath}" alt="${name} profil picture" />`;
     return { infos, photographerPortrait };
   };
 
@@ -63,10 +63,10 @@ export const usePhotographerTemplate = () => {
     card.setAttribute('class', 'media-card');
 
     card.innerHTML = `
-        <img class="media-card__thumbnail-image thumbnail" id="${media.id}" src="${picturePath}" alt="${media.title}"/>
+      <img id="${media.id}" class="media-card__thumbnail-image thumbnail"  src="${picturePath}" tabindex="0" alt="${media.title}"/>
       <div class="media-card__desc">
         <h3 class="media-card__title">${media.title}</h3> 
-        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like">
+        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like" tabindex="0">
           <i>${media.likes}</i>
           <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
@@ -82,10 +82,10 @@ export const usePhotographerTemplate = () => {
     card.setAttribute('class', 'media-card');
 
     card.innerHTML = `
-      <video class="media-card__thumbnail-video thumbnail" aria-label="${media.title}" id="${media.id}"><source src="${videoPath}" type="video/mp4"/></video>
+      <video id="${media.id}" class="media-card__thumbnail-video thumbnail" aria-label="${media.title}" tabindex="0"><source src="${videoPath}" type="video/mp4"/></video>
       <div class="media-card__desc">
         <h3 class="media-card__title">${media.title}</h3>
-        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like">
+        <span id="${media.id}" data-likes="${media.likes}" class="media-card__like" tabindex="0">
           <i>${media.likes}</i>
           <img src="assets/icons/like.png" alt="${media.likes} likes">
         </span>
@@ -100,11 +100,11 @@ export const usePhotographerTemplate = () => {
     const footer = document.createElement('footer');
     footer.innerHTML = `
      <span>
-        <i id="like-counter">${likes}</i>
+        <i id="like-counter" tabindex="0">${likes}</i>
         <img src="assets/icons/like-dark.png" alt="like icon" />
       </span>
       <span>
-        <i>${price}€ / jour </i>
+        <i tabindex="0">${price}€ / jour </i>
       </span>
     `;
     return footer;
