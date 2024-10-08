@@ -1,6 +1,8 @@
 import { usePhotographerTemplate } from '../templates/photographer.js';
-const { getPictureCardDOM, getVideoCardDOM } = usePhotographerTemplate();
 import { useLightboxTemplate } from '../templates/lightbox.js';
+
+const { getPictureCardDOM, getVideoCardDOM } = usePhotographerTemplate();
+
 const { getLightBoxPictureDOM, getLightBoxVideoDOM, getLightBoxImageContent, getLightBoxVideoContent } =
   useLightboxTemplate();
 

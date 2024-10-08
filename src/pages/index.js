@@ -1,6 +1,8 @@
 import { usePhotographerService } from '../api/photographerService.js';
-const { getPhotographers } = usePhotographerService();
 import { usePhotographerTemplate } from '../templates/photographer.js';
+
+const { getPhotographers } = usePhotographerService();
+
 const { getUserCardDOM } = usePhotographerTemplate();
 
 const displayData = async (photographers) => {

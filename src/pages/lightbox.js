@@ -1,110 +1,95 @@
 import { useMediaFactorie } from '../factories/mediaFactorie.js';
+
 const { createLightBoxMediaView, createLightBoxMediaContent } = useMediaFactorie();
 
 let lightBoxMediaCounter = 0;
 let lightBox;
-const lightBoxContainer = document.querySelector('#light-box');
+let lightBoxContainer = document.querySelector('#light-box');
 
 const displayLightBox = (event, photographer) => {
-  lightBoxMediaCounter = photographer.media.findIndex((item) => item.id === parseInt(event.target.id));
-  const lightBox = createLightBoxMediaView(photographer.media[lightBoxMediaCounter]);
-  lightBoxContainer.appendChild(lightBox);
-  lightBoxContainer.style.display = 'flex';
-  return lightBox;
+    lightBoxMediaCounter = photographer.media.findIndex((item) => item.id === parseInt(event.target.id));
+    const lightBox = createLightBoxMediaView(photographer.media[lightBoxMediaCounter]);
+    lightBoxContainer.appendChild(lightBox);
+    lightBoxContainer.style.display = 'flex';
+    document.dispatchEvent(new CustomEvent('openLightBox'));
+
+    return lightBox;
 };
 
-const onClose = () => {
-  lightBoxMediaCounter = 0;
-  lightBoxContainer.style.display = 'none';
-  lightBoxContainer.removeChild(lightBox);
+export const onClose = () => {
+    lightBoxMediaCounter = 0;
+    lightBoxContainer.style.display = 'none';
+    lightBoxContainer.removeChild(lightBox);
 };
 
-const onNextArrow = (photographer) => {
-  lightBoxMediaCounter = lightBoxMediaCounter + 1;
-  const oldLightBoxContent = document.querySelector('.light-box__content');
-  lightBox.removeChild(oldLightBoxContent);
+export const onNextArrow = (photographer) => {
+    lightBoxMediaCounter = lightBoxMediaCounter + 1;
+    const oldLightBoxContent = document.querySelector('.light-box__content');
+    lightBox.removeChild(oldLightBoxContent);
 
-  const newLightBoxContent = createLightBoxMediaContent(photographer.media[lightBoxMediaCounter]);
-  const left = document.querySelector('.light-box__left-side');
-  left.after(newLightBoxContent);
+    const newLightBoxContent = createLightBoxMediaContent(photographer.media[lightBoxMediaCounter]);
+    const left = document.querySelector('.light-box__left-side');
+    left.after(newLightBoxContent);
 };
 
-const onBackArrow = (photographer) => {
-  lightBoxMediaCounter = lightBoxMediaCounter - 1;
-  const oldLightBoxContent = document.querySelector('.light-box__content');
-  lightBox.removeChild(oldLightBoxContent);
+export const onBackArrow = (photographer) => {
+    lightBoxMediaCounter = lightBoxMediaCounter - 1;
+    const oldLightBoxContent = document.querySelector('.light-box__content');
+    lightBox.removeChild(oldLightBoxContent);
 
-  const newLightBoxContent = createLightBoxMediaContent(photographer.media[lightBoxMediaCounter]);
-  const left = document.querySelector('.light-box__left-side');
-  left.after(newLightBoxContent);
-};
-
-export const redirectFocusOnLightBox = (data) => {
-  const focusableElements = '.light-box__back-arrow, .light-box__close-button, .light-box__next-arrow';
-  let focusableContent = document.querySelectorAll(focusableElements);
-  focusableContent = Array.prototype.slice.call(focusableContent);
-
-  const firstFocusableElement = focusableContent[0]; // Premier élément focusable
-  const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-  if (lightBoxMediaCounter === 0) {
-    lastFocusableElement.focus();
-  } else {
-    firstFocusableElement.focus();
-  }
-
-  focusableContent.forEach((content) => {
-    content.addEventListener('keydown', (ev) => {
-      if (ev.code === 'Space' || ev.code === 'Enter') {
-        switch (ev.target.className) {
-          case 'light-box__close-button':
-            onClose(lightBoxContainer);
-            break;
-          case 'light-box__next-arrow':
-            onNextArrow(data);
-            break;
-          case 'light-box__back-arrow':
-            onBackArrow(data);
-            break;
-          default:
-        }
-      }
-    });
-  });
+    const newLightBoxContent = createLightBoxMediaContent(photographer.media[lightBoxMediaCounter]);
+    const left = document.querySelector('.light-box__left-side');
+    left.after(newLightBoxContent);
 };
 
 export const init = (e, data) => {
-  lightBox = displayLightBox(e, data);
+    lightBox = displayLightBox(e, data);
 
-  const closeLightBoxButton = document.querySelector('.light-box__close-button');
-  closeLightBoxButton.addEventListener('click', () => {
-    onClose(lightBox);
-  });
+    const handleNextArrow = () => {
+        if (lightBoxMediaCounter + 1 !== data.media.length) {
+            onNextArrow(data);
+        }
+        showArrow();
+    };
+    document.addEventListener('nextArrowLightbox', handleNextArrow);
 
-  const backArrowButton = document.querySelector('.light-box__back-arrow');
-  backArrowButton.addEventListener('click', () => {
-    onBackArrow(data);
+    const handleBackArrow = () => {
+        if (lightBoxMediaCounter !== 0) {
+            onBackArrow(data);
+        }
+        showArrow();
+    };
+    document.addEventListener('backArrowLightbox', handleBackArrow);
+
+    const closeLightBoxButton = document.querySelector('.light-box__close-button');
+    closeLightBoxButton.addEventListener('click', () => {
+        onClose();
+    });
+
+    const backArrowButton = document.querySelector('.light-box__back-arrow');
+    backArrowButton.addEventListener('click', () => {
+        onBackArrow(data);
+        showArrow();
+    });
+
+    const nextArrowButton = document.querySelector('.light-box__next-arrow');
+    nextArrowButton.addEventListener('click', () => {
+        onNextArrow(data);
+        showArrow();
+    });
+
+    const showArrow = () => {
+        if (lightBoxMediaCounter === 0) {
+            backArrowButton.style.display = 'none';
+            nextArrowButton.style.display = 'block';
+        } else if (lightBoxMediaCounter === data.media.length - 1) {
+            backArrowButton.style.display = 'block';
+            nextArrowButton.style.display = 'none';
+        } else {
+            backArrowButton.style.display = 'block';
+            nextArrowButton.style.display = 'block';
+        }
+    };
+
     showArrow();
-  });
-
-  const nextArrowButton = document.querySelector('.light-box__next-arrow');
-  nextArrowButton.addEventListener('click', () => {
-    onNextArrow(data);
-    showArrow();
-  });
-
-  const showArrow = () => {
-    if (lightBoxMediaCounter === 0) {
-      backArrowButton.style.display = 'none';
-      nextArrowButton.style.display = 'block';
-    } else if (lightBoxMediaCounter === data.media.length - 1) {
-      backArrowButton.style.display = 'block';
-      nextArrowButton.style.display = 'none';
-    } else {
-      backArrowButton.style.display = 'block';
-      nextArrowButton.style.display = 'block';
-    }
-  };
-
-  showArrow();
 };
