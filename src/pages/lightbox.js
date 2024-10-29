@@ -1,6 +1,9 @@
 import { useMediaFactorie } from '../factories/mediaFactorie.js';
+import { useListener } from '../utils/listener.js';
+import { isLightBoxOpen } from './photographer.js';
 
 const { createLightBoxMediaView, createLightBoxMediaContent } = useMediaFactorie();
+const { removeAllEventListenersOfType, addEventListenerWithTracking } = useListener();
 
 let lightBoxMediaCounter = 0;
 let lightBox;
@@ -11,12 +14,15 @@ const displayLightBox = (event, photographer) => {
     const lightBox = createLightBoxMediaView(photographer.media[lightBoxMediaCounter]);
     lightBoxContainer.appendChild(lightBox);
     lightBoxContainer.style.display = 'flex';
-    document.dispatchEvent(new CustomEvent('openLightBox'));
 
     return lightBox;
 };
 
 export const onClose = () => {
+    removeAllEventListenersOfType(document, 'keydown');
+    removeAllEventListenersOfType(document, 'closeLightBox');
+    removeAllEventListenersOfType(document, 'nextArrowLightbox');
+    removeAllEventListenersOfType(document, 'backArrowLightbox');
     lightBoxMediaCounter = 0;
     lightBoxContainer.style.display = 'none';
     lightBoxContainer.removeChild(lightBox);
@@ -51,7 +57,7 @@ export const init = (e, data) => {
         }
         showArrow();
     };
-    document.addEventListener('nextArrowLightbox', handleNextArrow);
+    addEventListenerWithTracking(document, 'nextArrowLightbox', handleNextArrow);
 
     const handleBackArrow = () => {
         if (lightBoxMediaCounter !== 0) {
@@ -59,11 +65,12 @@ export const init = (e, data) => {
         }
         showArrow();
     };
-    document.addEventListener('backArrowLightbox', handleBackArrow);
+    addEventListenerWithTracking(document, 'backArrowLightbox', handleBackArrow);
 
     const closeLightBoxButton = document.querySelector('.light-box__close-button');
     closeLightBoxButton.addEventListener('click', () => {
         onClose();
+        isLightBoxOpen.value = false;
     });
 
     const backArrowButton = document.querySelector('.light-box__back-arrow');

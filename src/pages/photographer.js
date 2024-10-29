@@ -5,6 +5,7 @@ import { orderBy } from '../utils/mediaFilter.js';
 import * as contactForm from '../utils/contactForm.js';
 import * as lightBox from './lightbox.js';
 import { onClose } from './lightbox.js';
+import { useListener } from '../utils/listener.js';
 
 const { getPhotographerById, getPhotographers, getPhotographerLikes } = usePhotographerService();
 
@@ -12,11 +13,12 @@ const { getHeaderPhotographerDOM, getFooterPhotographerDOM } = usePhotographerTe
 
 const { createMediaCard } = useMediaFactorie();
 
+const { addEventListenerWithTracking } = useListener();
+
+export let isLightBoxOpen = { value: false };
 const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'));
 let photographer;
 let likes;
-let isLightBoxOpen = false;
-let isContactModalOpen = false;
 
 const mediaFilter = document.querySelector('.media-filter');
 
@@ -88,10 +90,12 @@ const addListenerOnThumbnails = () => {
     medias.forEach((media) => {
         media.addEventListener('click', (e) => {
             lightBox.init(e, photographer);
+            document.dispatchEvent(new CustomEvent('openLightBox'));
         });
         media.addEventListener('keydown', (ev) => {
             if (ev.code === 'Space' || ev.code === 'Enter') {
                 lightBox.init(ev, photographer);
+                document.dispatchEvent(new CustomEvent('openLightBox'));
             }
         });
     });
@@ -129,7 +133,7 @@ const displayData = async (data, likes) => {
 };
 
 const keyboardEventHandler = (ev) => {
-    if (isLightBoxOpen) {
+    if (isLightBoxOpen.value) {
         switch (ev.code) {
             case 'Escape':
             case 'Esc':
@@ -145,9 +149,15 @@ const keyboardEventHandler = (ev) => {
     }
 };
 
+const handleCloseLightBox = () => {
+    onClose();
+    isLightBoxOpen.value = false;
+};
+
 const handleLightBoxOpen = () => {
-    isLightBoxOpen = true;
-    document.addEventListener('keydown', (ev) => keyboardEventHandler(ev));
+    isLightBoxOpen.value = true;
+    addEventListenerWithTracking(document, 'keydown', (ev) => keyboardEventHandler(ev));
+    addEventListenerWithTracking(document, 'closeLightBox', handleCloseLightBox);
 };
 
 const init = async () => {
@@ -170,7 +180,6 @@ init().then(() => {
     document.addEventListener('mediaListUpdated', initListeners);
 
     document.addEventListener('contactModalOpened', () => {
-        isContactModalOpen = true;
         const closeButton = document.querySelector('.contact_modal__close-button');
         closeButton.addEventListener('keydown', (ev) => {
             if (ev.code === 'Enter' || ev.code === 'Space') {
@@ -184,9 +193,5 @@ init().then(() => {
         logoLink.focus();
     });
 
-    document.addEventListener('openLightBox', handleLightBoxOpen);
-    document.addEventListener('closeLightBox', () => {
-        onClose();
-        isLightBoxOpen = false;
-    });
+    addEventListenerWithTracking(document, 'openLightBox', handleLightBoxOpen);
 });
