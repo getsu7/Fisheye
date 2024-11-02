@@ -156,7 +156,7 @@ const handleCloseLightBox = () => {
 
 const handleLightBoxOpen = () => {
     isLightBoxOpen.value = true;
-    addEventListenerWithTracking(document, 'keydown', (ev) => keyboardEventHandler(ev));
+    addEventListenerWithTracking(document, 'keydown', keyboardEventHandler);
     addEventListenerWithTracking(document, 'closeLightBox', handleCloseLightBox);
 };
 
