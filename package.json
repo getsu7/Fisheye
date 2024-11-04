@@ -1,0 +1,26 @@
+{
+  "name": "fisheye",
+  "version": "1.0.0",
+  "description": "Créez un site accessible pour une plateforme de photographes",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getsu7/Fisheye.git"
+  },
+  "author": "getsu7",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/getsu7/Fisheye/issues"
+  },
+  "homepage": "https://github.com/getsu7/Fisheye#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "eslint": "^9.12.0",
+    "globals": "^15.10.0",
+    "prettier": "^3.3.3"
+  }
+}

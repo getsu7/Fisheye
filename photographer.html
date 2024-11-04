@@ -1,37 +1,79 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
-  </head>
-  <body>
-    <header>
-      <img src="assets/images/logo.png" class="logo" />
-    </header>
-    <main id="main">
-      <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-      </div>
-    </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+<!doctype html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <link href="./css/style.css" rel="stylesheet" type="text/css" />
+        <meta charset="utf-8" />
+        <link href="./assets/favicon.png" rel="icon" type="image/png" />
+        <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/a12ba4674f.js" crossorigin="anonymous"></script>
+
+        <title>Fisheye - photographe</title>
+    </head>
+    <body>
+        <header>
+            <a href="./index.html" tabindex="0" id="logo__link">
+                <img alt="Fisheye Home page" class="logo" src="./assets/images/logo.png" />
+            </a>
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
-  </body>
+        <main id="main">
+            <div class="photograph-header">
+                <button class="contact_button">Contactez-moi</button>
+            </div>
+            <div class="media-filters">
+                <span>Trier par</span>
+
+                <div id="media-filter" class="select-menu">
+                    <ul class="select-menu__options" tabindex="0">
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="popularity">Popularité</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </li>
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="date">Date</span>
+                        </li>
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="title">Titre</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <div id="contact_modal">
+            <div class="modal">
+                <header>
+                    <h2 class="contact_modal__header-name">Contactez-moi</h2>
+                    <img
+                        alt="contact button"
+                        class="contact_modal__close-button"
+                        src="./assets/icons/close.svg"
+                        tabindex="0"
+                    />
+                </header>
+                <form id="contact_form">
+                    <div>
+                        <label for="firstname">
+                            Prénom
+                            <input id="firstname" name="firstname" />
+                        </label>
+                        <label for="lastname">
+                            Nom
+                            <input id="lastname" name="lastname" />
+                        </label>
+                        <label for="email">
+                            Email
+                            <input id="email" name="email" />
+                        </label>
+                        <label for="message">
+                            Votre message
+                            <textarea id="message" name="message"></textarea>
+                        </label>
+                    </div>
+                    <button class="contact_button" type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+        <div id="light-box"></div>
+        <script src="./src/pages/photographer.js" type="module"></script>
+        <script src="./src/components/mediaFilter.js" type="module"></script>
+    </body>
 </html>
