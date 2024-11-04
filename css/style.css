@@ -1,92 +1,93 @@
 @import url('photographer.css');
 @import url('lightbox.css');
+@import url('reset.css');
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    margin: 0;
 }
 
 header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
 }
 
 h1 {
-  color: #901c1c;
-  margin-right: 100px;
+    color: #901c1c;
+    margin-right: 100px;
 }
 
 p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .logo {
-  height: 50px;
-  margin-left: 100px;
+    height: 50px;
+    margin-left: 100px;
 }
 
 .photographer_section {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 70px;
-  margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 70px;
+    margin-top: 100px;
 }
 
 .photographer_section article {
-  justify-self: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .photographer_section article div {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
 }
 
 .photographer_section article a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
 }
 
 .photographer_section article div img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 155%;
-  height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 155%;
+    height: auto;
 }
 
 .photographer_section article h2 {
-  color: #d3573c;
-  font-size: 36px;
-  margin: 0;
+    color: #d3573c;
+    font-size: 36px;
+    margin: 0;
 }
 
 article > :nth-child(2) {
-  color: rgba(144, 28, 28, 1);
-  font-size: 13px;
-  margin: 0;
+    color: rgba(144, 28, 28, 1);
+    font-size: 13px;
+    margin: 0;
 }
 
 article > :nth-child(3) {
-  color: rgba(0, 0, 0, 1);
-  font-size: 12px;
-  margin: 0;
+    color: rgba(0, 0, 0, 1);
+    font-size: 12px;
+    margin: 0;
 }
 
 .photographer_section article i {
-  color: rgba(117, 117, 117, 1);
-  font-size: 11px;
-  margin: 0;
+    color: rgba(117, 117, 117, 1);
+    font-size: 11px;
+    margin: 0;
 }

@@ -10,7 +10,7 @@ p {
     background-color: #fafafa;
     height: 300px;
     border-radius: 5px;
-    margin: 0 100px;
+    margin: 25px 100px;
     padding: 0 3rem;
     display: flex;
     align-items: center;
@@ -117,38 +117,80 @@ form input {
     border-radius: 5px;
 }
 
-.media-filter {
+.media-filters {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin: 1em 100px 0 100px;
-}
-
-.media-filter label {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.media-filter__container {
     position: relative;
+    margin-right: auto;
+    margin-left: 100px;
+    width: fit-content;
+    height: 30px;
 }
 
-.media-filter__dropdown {
+.select-menu {
+    width: 140px;
+    position: absolute;
+    box-shadow: 0 0 1px rgb(0, 0, 0, 0.1);
+    border-radius: 11px;
+    color: #fff;
+    text-wrap: nowrap;
+    top: 0;
+    left: 100%;
+}
+
+.select-menu__options {
     background: rgba(144, 28, 28, 1);
-    padding: 1rem;
-    border-radius: 5px;
-    color: #fafafa;
+    border-radius: 11px;
+    display: block;
+    box-shadow: 0 0 1px rgb(0, 0, 0, 0.1);
+}
+
+.select-menu__option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    height: 30px;
+    padding: 10px 16px 10px 16px;
+    border-top: 1px solid #fff;
     cursor: pointer;
 }
 
-.media-filter__dropdown option {
-    padding: 1rem;
+.select-menu__option svg {
+    border-top: 0;
+    display: block;
+}
+
+.select-menu__option:not(:first-child) svg {
+    display: none;
+}
+
+.select-menu__option:not(:first-child) {
+    display: none;
+}
+
+.select-menu.active .select-menu__option:not(:first-child) {
+    display: block;
+}
+
+.select-menu.active .select-menu__options {
+    display: block;
+}
+
+.select-menu.active .select-menu__option svg {
+    transform: rotate(-180deg);
+}
+
+.media-filters > span {
+    font-size: 18px;
+    font-weight: 700;
+    margin-right: 1rem;
 }
 
 .media-card__list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: 3rem;
     margin: 50px 100px;

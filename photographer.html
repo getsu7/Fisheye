@@ -5,6 +5,8 @@
         <meta charset="utf-8" />
         <link href="./assets/favicon.png" rel="icon" type="image/png" />
         <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/a12ba4674f.js" crossorigin="anonymous"></script>
+
         <title>Fisheye - photographe</title>
     </head>
     <body>
@@ -17,14 +19,22 @@
             <div class="photograph-header">
                 <button class="contact_button">Contactez-moi</button>
             </div>
-            <div class="media-filter">
-                <label for="filter">Trier par</label>
-                <div class="media-filter__container">
-                    <select class="media-filter__dropdown" id="filter" name="filter">
-                        <option value="popularity">Popularité</option>
-                        <option value="date">Date</option>
-                        <option value="title">Titre</option>
-                    </select>
+            <div class="media-filters">
+                <span>Trier par</span>
+
+                <div id="media-filter" class="select-menu">
+                    <ul class="select-menu__options" tabindex="0">
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="popularity">Popularité</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </li>
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="date">Date</span>
+                        </li>
+                        <li class="select-menu__option" tabindex="0">
+                            <span class="select-menu__text" data-value="title">Titre</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </main>
@@ -64,5 +74,6 @@
         </div>
         <div id="light-box"></div>
         <script src="./src/pages/photographer.js" type="module"></script>
+        <script src="./src/components/mediaFilter.js" type="module"></script>
     </body>
 </html>

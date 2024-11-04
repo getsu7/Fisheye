@@ -6,6 +6,7 @@ import * as contactForm from '../utils/contactForm.js';
 import * as lightBox from './lightbox.js';
 import { onClose } from './lightbox.js';
 import { useListener } from '../utils/listener.js';
+import { retrieveFilterLabelFromValue } from '../constants/filterConstant.js';
 
 const { getPhotographerById, getPhotographers, getPhotographerLikes } = usePhotographerService();
 
@@ -20,7 +21,8 @@ const idPhotographer = parseInt(new URL(document.location).searchParams.get('id'
 let photographer;
 let likes;
 
-const mediaFilter = document.querySelector('.media-filter');
+const mediaFiltersBar = document.querySelector('.media-filters');
+const mediaFilter = document.querySelector('#media-filter');
 
 const contactButton = document.querySelector('.contact_button');
 const closeContactButton = document.querySelector('.contact_modal__close-button');
@@ -44,7 +46,7 @@ const createMediaCardList = (data) => {
         const mediaCard = createMediaCard(media);
         mediaCardList.appendChild(mediaCard);
     });
-    mediaFilter.after(mediaCardList);
+    mediaFiltersBar.after(mediaCardList);
     return mediaCardList;
 };
 
@@ -76,12 +78,43 @@ const addListenerOnContact = () => {
 };
 
 const addListenerOnMediaFilter = () => {
-    mediaFilter.addEventListener('change', (e) => {
-        photographer.media = orderBy(e.target.value, photographer.media);
-        const oldMediaCardList = document.querySelector('.media-card__list');
-        oldMediaCardList.remove();
-        createMediaCardList(photographer);
-        document.dispatchEvent(new CustomEvent('mediaListUpdated'));
+    const evTypes = ['click', 'keydown'];
+    const mediaFilterOptions = mediaFilter.querySelectorAll('.select-menu__option');
+
+    evTypes.forEach((evType) => {
+        mediaFilterOptions.forEach((mediaFilterOption) => {
+            mediaFilterOption.addEventListener(evType, (e) => {
+                if (evType === 'click' || (evType === 'keydown' && (e.code === 'Enter' || e.code === 'Space')))
+                    if (
+                        mediaFilterOptions[0].querySelector('.select-menu__text').dataset.value !==
+                        mediaFilterOption.querySelector('.select-menu__text').dataset.value
+                    ) {
+                        let chevron = mediaFilterOptions[0].querySelector('.fa-chevron-down');
+                        let temp = mediaFilterOptions[0].querySelector('.select-menu__text').dataset.value;
+
+                        mediaFilterOptions[0].querySelector('.select-menu__text').textContent =
+                            mediaFilterOption.querySelector('.select-menu__text').textContent;
+
+                        mediaFilterOptions[0].querySelector('.select-menu__text').dataset.value =
+                            mediaFilterOption.querySelector('.select-menu__text').dataset.value;
+
+                        mediaFilterOption.querySelector('.select-menu__text').textContent =
+                            retrieveFilterLabelFromValue(temp);
+                        mediaFilterOption.querySelector('.select-menu__text').dataset.value = temp;
+                        mediaFilterOptions[0].appendChild(chevron);
+
+                        temp = mediaFilterOptions[0].querySelector('.select-menu__text').dataset.value;
+
+                        photographer.media = orderBy(temp, photographer.media);
+                        const oldMediaCardList = document.querySelector('.media-card__list');
+                        oldMediaCardList.remove();
+                        createMediaCardList(photographer);
+                        addListenerOnThumbnails();
+                        addListenerOnLikes();
+                        addListenerOnContact();
+                    }
+            });
+        });
     });
 };
 
@@ -111,13 +144,6 @@ const addListenerOnLikes = () => {
             }
         });
     });
-};
-
-const initListeners = () => {
-    addListenerOnMediaFilter();
-    addListenerOnThumbnails();
-    addListenerOnLikes();
-    addListenerOnContact();
 };
 
 const displayData = async (data, likes) => {
@@ -167,7 +193,10 @@ const init = async () => {
     likes = getPhotographerLikes(photographer);
 
     await displayData(photographer, likes);
-    initListeners();
+    addListenerOnMediaFilter();
+    addListenerOnThumbnails();
+    addListenerOnLikes();
+    addListenerOnContact();
 };
 
 init().then(() => {
@@ -177,7 +206,6 @@ init().then(() => {
             writable: true,
         });
     });
-    document.addEventListener('mediaListUpdated', initListeners);
 
     document.addEventListener('contactModalOpened', () => {
         const closeButton = document.querySelector('.contact_modal__close-button');
